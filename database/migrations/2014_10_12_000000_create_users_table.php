@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('surname', 25);
             $table->string('email', 100)->unique();
             $table->string('password', 255);
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->rememberToken();
             $table->timestamps();
 
