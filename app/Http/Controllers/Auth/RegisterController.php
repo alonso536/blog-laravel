@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+    public function index() {
+        return view('auth.register');
+    }
+
     public function store(Request $request) {
         $request->validate([
             'nombre' => ['required', 'string', 'min:4', 'max:25'],
@@ -17,7 +22,7 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()]
         ]);
 
-        User::create([
+        $user = User::create([
             'role' => 'user',
             'name' => $request->nombre,
             'surname' => $request->apellido,
@@ -25,6 +30,9 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        return to_route('login')->with('status', 'Tu cuenta ha sido creada exitosamente');
+        Auth::login($user);
+        $user->sendEmailVerificationNotification();
+        
+        return to_route('dashboard');
     }
 }

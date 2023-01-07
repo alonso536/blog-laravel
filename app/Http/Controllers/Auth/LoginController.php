@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function index() {
+        return view('auth.login');
+    }
+
     public function store(Request $request) {
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
@@ -21,8 +25,12 @@ class LoginController extends Controller
             ]);
         }
 
+        if(!$request->user()->hasVerifiedEmail()) {
+            $request->user()->sendEmailVerificationNotification();
+        }
+
         $request->session()->regenerate();
-        return redirect()->intended()->with('status', 'Haz iniciado sesión');
+        return redirect()->intended('/dashboard')->with('status', 'Iniciaste sesión');
     }
 
     public function destroy(Request $request) {
