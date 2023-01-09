@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
 class UserController extends Controller
@@ -15,6 +16,10 @@ class UserController extends Controller
 
     public function show($username, $id) {
         $user = User::find($id);
+
+        if(is_null($user)) {
+            $user = DB::table('users')->where('id', $id)->first();
+        }
 
         if($user->username != $username) {
             return abort(404);
@@ -70,5 +75,22 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return to_route('home')->with('status', "Su contraseña se ha actualizado con exito");
+    }
+
+    public function delete() {
+        return view('users.delete', ['title' => 'Desactivar cuenta']);
+    }
+
+    public function destroy(Request $request, $id) {
+        $user = User::find($id);
+
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $user->delete();
+
+        return to_route('home')->with('status', 'Has desactivado tu cuenta. Para volver a activarla, vuelve a iniciar sesión con tus credenciales');
     }
 }

@@ -45,12 +45,12 @@ Route::post('reset-password', [PasswordController::class, 'update'])->middleware
 
 Route::get('dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('users.dashboard');
 Route::get('perfil/{username}/{id}', [UserController::class, 'show'])->where('id', '[0-9]+')->name('users.profile');
-
 Route::get('editar-perfil', [UserController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit-profile');
 Route::patch('editar-perfil', [UserController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update-profile');
-
 Route::get('editar-password', [UserController::class, 'editPassword'])->middleware(['auth', 'verified'])->name('users.edit-password');
 Route::patch('editar-password', [UserController::class, 'updatePassword'])->middleware(['auth', 'verified'])->name('users.update-password');
+Route::get('desactivar-cuenta' , [UserController::class, 'delete'])->middleware(['auth', 'verified'])->name('users.delete');
+Route::delete('desactivar-cuenta/{id}' , [UserController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.destroy');
 
 // rutas de las imagenes
 Route::post('image/store', [ImageController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store-image');

@@ -1,4 +1,5 @@
-<x-layouts.app :title="'Perfil de '.$username">
+<x-layouts.app :title="'Perfil de '.$user->username">
+    @if(is_null($user->deleted_at))
     <section class="row border-bottom">
         <article class="col-md-4 col-12 justify-content-center my-4">
             @include('users.layouts.avatar')
@@ -14,4 +15,7 @@
         <p class="my-3">No se encontraron notas.</p>
         @endif
     </section>
+    @else
+    <p class="text-md-start text-center">Este usuario ha borrado su cuenta.</p>
+    @endif
 </x-layouts.app>

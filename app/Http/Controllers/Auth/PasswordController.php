@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 
 class PasswordController extends Controller
@@ -17,6 +18,12 @@ class PasswordController extends Controller
     }
 
     public function store(Request $request) {
+        $user = DB::table('users')->where('email', $request->email)->first();
+
+        if(!is_null($user) && !is_null($user->deleted_at)) {
+            DB::table('users')->where('id', $user->id)->update(['deleted_at' => null]);
+        }
+
         $request->validate(['email' => 'required', 'string', 'email']);
  
         $status = Password::sendResetLink(

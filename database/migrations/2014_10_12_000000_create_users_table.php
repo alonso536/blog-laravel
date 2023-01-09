@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('image', 255)->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';

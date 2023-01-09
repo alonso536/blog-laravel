@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
