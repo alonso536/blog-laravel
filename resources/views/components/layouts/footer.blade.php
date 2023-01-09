@@ -15,6 +15,6 @@
         </form>
         @endauth
       </ul>
-      <p class="text-center" style="color:#0d6efd">&copy; {{date('Y')}} Company, Inc</p>
+      <p class="text-center" style="color:#0d6efd">&copy; {{date('Y')}} {{config('app.name')}}, Inc</p>
     </footer>
 </div>

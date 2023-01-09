@@ -18,7 +18,7 @@ class EmailVerificationController extends Controller
     public function create(EmailVerificationRequest $request) {
         $request->fulfill();
  
-        return to_route('dashboard')->with('status', 'Email verificado');
+        return to_route('users.dashboard')->with('status', 'Email verificado');
     }
 
     public function store(Request $request) {

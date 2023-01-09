@@ -7,31 +7,29 @@
             <form method="POST" action="{{route('register')}}">
                 @csrf
                 <div class="form-group my-5">
-                    <input type="text" name="nombre" class="form-control py-2" value="{{old('nombre') ?? ''}}" placeholder="Nombre">
+                    <label for="usuario" class="form-label">Nombre de usuario</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control py-2" value="{{old('usuario') ?? ''}}" placeholder="user1234">
                 </div>
-                @error('nombre')
+                @error('usuario')
                 <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
                 @enderror
                 <div class="form-group my-5">
-                    <input type="text" name="apellido" class="form-control py-2" value="{{old('apellido') ?? ''}}" placeholder="Apellido">
-                </div>
-                @error('apellido')
-                <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
-                @enderror
-                <div class="form-group my-5">
-                    <input type="email" name="email" class="form-control py-2" value="{{old('email') ?? ''}}" placeholder="Correo electronico">
+                    <label for="email" class="form-label">Correo electronico</label>
+                    <input type="email" id="email" name="email" class="form-control py-2" value="{{old('email') ?? ''}}" placeholder="user@example.com">
                 </div>
                 @error('email')
                 <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
                 @enderror
                 <div class="form-group my-5">
-                    <input type="password" name="password" class="form-control py-2" placeholder="Contraseña">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" name="password" class="form-control py-2">
                 </div>
                 @error('password')
                 <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
                 @enderror
                 <div class="form-group my-5">
-                    <input type="password" name="password_confirmation" class="form-control py-2" placeholder="Repite la contraseña">
+                    <label for="password2" class="form-label">Repite la contraseña</label>
+                    <input type="password" id="password2" name="password_confirmation" class="form-control py-2">
                 </div>
                 @error('password_confirmation')
                 <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>

@@ -24,11 +24,11 @@
               @auth
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ Auth::user()->name }} {{ Auth::user()->surname }}
+                  {{ Auth::user()->username }}
                 </a>
                 <ul class="dropdown-menu shadow-sm">
-                  <li><a class="nav-link mx-2" href="#">Perfil</a></li>
-                  <li><a class="nav-link mx-2" href="{{route('dashboard')}}">Configuración</a></li>
+                  <li><a class="nav-link mx-2" href="{{route('users.profile', ['username' => Auth::user()->username, 'id' => Auth::id()])}}">Perfil</a></li>
+                  <li><a class="nav-link mx-2" href="{{route('users.dashboard')}}">Configuración</a></li>
                   <form method="POST" action="{{route('logout')}}">
                     @csrf
                     <li><button type="submit" class="btn-logout nav-link mx-2">Cerrar sesión</button></li>

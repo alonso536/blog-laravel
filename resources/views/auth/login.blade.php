@@ -7,10 +7,12 @@
             <form method="POST" action="{{route('login')}}">
                 @csrf
                 <div class="form-group my-5">
-                    <input type="email" name="email" class="form-control py-2" value="{{old('email') ?? ''}}" placeholder="Correo electrónico">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="email" name="email" class="form-control py-2" value="{{old('email') ?? ''}}">
                 </div>
                 <div class="form-group my-5">
-                    <input type="password" name="password" class="form-control py-2" placeholder="Contraseña">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" name="password" class="form-control py-2">
                 </div>
                 <div class="form-group my-5 d-flex justify-content-start">
                     <label for="remember" class="form-label m-0">Recuérdame</label>

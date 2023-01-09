@@ -16,16 +16,14 @@ class RegisterController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nombre' => ['required', 'string', 'min:4', 'max:25'],
-            'apellido' => ['required', 'string', 'min:4', 'max:25'],
+            'usuario' => ['required', 'string', 'alpha_dash', 'min:4', 'max:25', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()]
         ]);
 
         $user = User::create([
             'role' => 'user',
-            'name' => $request->nombre,
-            'surname' => $request->apellido,
+            'username' => $request->usuario,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
@@ -33,6 +31,6 @@ class RegisterController extends Controller
         Auth::login($user);
         $user->sendEmailVerificationNotification();
         
-        return to_route('dashboard');
+        return to_route('users.dashboard');
     }
 }

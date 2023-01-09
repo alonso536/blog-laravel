@@ -7,7 +7,8 @@
             <form method="POST" action="{{route('password.email')}}">
                 @csrf
                 <div class="form-group my-5">
-                    <input type="email" name="email" class="form-control py-2" placeholder="Correo electrónico">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="email" name="email" class="form-control py-2">
                 </div>
                 @error('email')
                 <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
