@@ -93,4 +93,13 @@ class UserController extends Controller
 
         return to_route('home')->with('status', 'Has desactivado tu cuenta. Para volver a activarla, vuelve a iniciar sesión con tus credenciales');
     }
+
+    public function posts() {
+        return view('users.posts', ['title' => 'Mis notas']);
+    }
+
+    public function trashed($id) {
+        $deleted = DB::table('posts')->where('user_id', $id)->whereNotNull('deleted_at')->get();
+        return view('users.trashed', ['title' => 'Borrador', 'posts' => $deleted]);
+    }
 }

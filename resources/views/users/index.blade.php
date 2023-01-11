@@ -32,7 +32,7 @@
                   </tr>
                   <tr>
                     <th scope="row">Te uniste:</th>
-                    <td>{{Auth::user()->created_at}}</td>
+                    <td>{{ \FormatTime::LongTimeFilter(Auth::user()->created_at)}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -60,7 +60,21 @@
                 <h2 class="p-2 pt-0">Ultimas notas escritas</h2>
                 @if(!count(Auth::user()->posts))
                 <p class="p-2">Todavía no has escrito ninguna nota</p>
-                @endif
+                @else
+                <section class="row p-2">
+                  @foreach(Auth::user()->posts->reverse() as $in => $post)
+                  @if($in == (Auth::user()->posts->count() - 4))
+                      @break
+                  @endif
+                  <div class="border-bottom py-3 my-3">
+                      <h4>{{$post->title}}</h4>
+                      <p class="paragraph">{{substr($post->content, 0, 235).'...'}}</p>
+                      <small class="d-block text-secondary mb-3">Escrita {{\FormatTime::LongTimeFilter($post->created_at)}}</small>
+                      <a href="{{route('posts.show', $post)}}" class="btn btn-primary bg-gradient">Seguir leyendo</a>
+                  </div>
+                  @endforeach
+              </section>
+              @endif
             </div>
         </article>
     </section>

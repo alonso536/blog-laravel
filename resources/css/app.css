@@ -95,6 +95,18 @@ main {
     object-fit: contain;
 }
 
+.img-post {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.img-post-show {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
 @media screen and (max-width: 767px) {
     #title {
         justify-content: center;
