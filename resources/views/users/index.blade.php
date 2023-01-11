@@ -62,8 +62,8 @@
                 <p class="p-2">Todavía no has escrito ninguna nota</p>
                 @else
                 <section class="row p-2">
-                  @foreach(Auth::user()->posts->reverse() as $in => $post)
-                  @if($in == (Auth::user()->posts->count() - 4))
+                  @foreach(Auth::user()->posts as $in => $post)
+                  @if($in == 3)
                       @break
                   @endif
                   <div class="border-bottom py-3 my-3">

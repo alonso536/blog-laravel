@@ -98,8 +98,12 @@ class UserController extends Controller
         return view('users.posts', ['title' => 'Mis notas']);
     }
 
+    public function reviews() {
+        return view('users.reviews', ['title' => 'Mis comentarios']);
+    }
+
     public function trashed($id) {
-        $deleted = DB::table('posts')->where('user_id', $id)->whereNotNull('deleted_at')->get();
+        $deleted = DB::table('posts')->orderBy('created_at', 'desc')->where('user_id', $id)->whereNotNull('deleted_at')->get();
         return view('users.trashed', ['title' => 'Borrador', 'posts' => $deleted]);
     }
 }

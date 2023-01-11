@@ -9,7 +9,7 @@
             @if($posts->count() == 0)
                 <p class="py-2">Tu borrador está vacío</p>
             @else
-            <table class="table table-bordered my-3">
+            <table class="table table-bordered my-5">
                 <thead>
                     <tr>
                         <th>Codigo</th>
@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($posts->reverse() as $post)
+                    @foreach($posts as $post)
                     <tr>
                         <td>{{$post->id}}</td>
                         <td><a href="{{route('posts.restore', $post->id)}}" class="link">{{$post->title}}</a></td>

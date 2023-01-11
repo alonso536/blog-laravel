@@ -8,7 +8,10 @@
             <a href="{{route('posts.create')}}" class="btn btn-primary bg-gradient">Escribir Nota</a>
             <a href="{{route('users.trashed', Auth::id())}}" class="btn btn-primary bg-gradient">Ver borrador</a>
             </div>
-            <table class="table table-bordered my-3">
+            @if(!count(Auth::user()->posts))
+                <p class="py-2">No has escrito ninguna nota</p>
+            @else
+            <table class="table table-bordered my-5">
                 <thead>
                     <tr>
                         <th>Codigo</th>
@@ -17,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(Auth::user()->posts->reverse() as $post)
+                    @foreach(Auth::user()->posts as $post)
                     <tr>
                         <td>{{$post->id}}</td>
                         <td><a href="{{route('posts.show', $post)}}" class="link">{{$post->title}}</a></td>
@@ -32,6 +35,7 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
         </article>
     </section>
 </x-layouts.app>

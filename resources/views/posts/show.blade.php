@@ -18,13 +18,48 @@
                     <small class="d-block text-secondary mb-3">Escrita {{\FormatTime::LongTimeFilter($post->created_at)}}</small>
                 </div>
             </div>
-            <div class="row border-bottom pb-3">
+            <div class="row pb-3">
                 <form method="POST" action="">
                     @csrf
                     <div class="form-group d-flex justify-content-start">
                         <input type="submit" class="btn btn-primary bg-gradient" value="Me gusta">
                     </div>
                 </form>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-8 col-12">
+                    <h3 class="border-bottom pt-2 pb-4">Comentarios ({{count($post->reviews)}})</h3>
+                    <form method="POST" action="{{route('reviews.store', $post)}}" class="border-bottom pb-3">
+                        @csrf
+                        <div class="form-group my-3">
+                            <label for="contenido" class="form-label">Contenido</label>
+                            <textarea id="contenido" name="contenido" class="form-control py-2" placeholder="Escribe un comentario">{{old('contenido', '')}}</textarea>
+                        </div>
+                        @error('contenido')
+                        <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
+                        @enderror
+                        <div class="form-group d-flex justify-content-start">
+                            <input type="submit" class="btn btn-primary btn-sm bg-gradient" value="Enviar">
+                        </div>
+                    </form>
+                    <div id="reviews" class="my-3">
+                        @if(!count($post->reviews))
+                        <p>Esta nota no tiene ningún comentario</p>
+                        @else
+                        @foreach($post->reviews as $review)
+                        <div class="border-bottom py-3 my-3">
+                            <h5>
+                                <a href="{{route('users.profile', ['username' => $review->user->username, 'id' => $review->user->id])}}" class="link">{{'@'.$review->user->username}}</a>
+                            </h5>
+                            <p class="paragraph mb-2">{{$review->content}}</p>
+                            <small class="d-block text-secondary mb-3">{{\FormatTime::LongTimeFilter($review->created_at)}}</small>
+                        </div>
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                </div>
             </div>
         </div>
     </div>
