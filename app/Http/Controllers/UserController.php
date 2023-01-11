@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Post;
+use App\Models\Like;
 
 class UserController extends Controller
 {
@@ -100,6 +102,11 @@ class UserController extends Controller
 
     public function reviews() {
         return view('users.reviews', ['title' => 'Mis comentarios']);
+    }
+
+    public function likes() {
+        $likes = Like::orderBy('created_at', 'desc')->where('user_id', Auth::id())->paginate(3);
+        return view('users.likes', ['title' => 'Notas que me gustan', 'likes' => $likes]);
     }
 
     public function trashed($id) {

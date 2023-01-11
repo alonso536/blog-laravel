@@ -19,15 +19,32 @@
                 </div>
             </div>
             <div class="row pb-3">
-                <form method="POST" action="">
-                    @csrf
+                @if(Auth::check() && $post->likes->contains('user_id', Auth::id()))
+                <form method="POST" action="{{route('likes.destroy', ['post' => $post, 'user' => Auth::user()])}}">
+                    @csrf @method('DELETE')
                     <div class="form-group d-flex justify-content-start">
-                        <input type="submit" class="btn btn-primary bg-gradient" value="Me gusta">
+                        <input type="submit" class="btn btn-danger bg-gradient" value="Ya no me gusta ({{count($post->likes)}})">
                     </div>
                 </form>
+                @else
+                <form method="POST" action="{{route('likes.store', $post)}}">
+                    @csrf
+                    <div class="form-group d-flex justify-content-start">
+                        <input type="submit" class="btn btn-primary bg-gradient" value="Me gusta ({{count($post->likes)}})">
+                    </div>
+                </form>
+                @endif
             </div>
             <div class="row pb-3">
                 <div class="col-md-8 col-12">
+                    @if(session('like'))
+                    <div class="alert alert-primary my-3 py-2" role="alert">
+                        {{session('like')}}
+                    </div>
+                    @endif
+                    @error('contenido')
+                    <p class="alert alert-danger my-3 py-2" role="alert">{{$message}}</p>
+                    @enderror
                     <h3 class="border-bottom pt-2 pb-4">Comentarios ({{count($post->reviews)}})</h3>
                     <form method="POST" action="{{route('reviews.store', $post)}}" class="border-bottom pb-3">
                         @csrf

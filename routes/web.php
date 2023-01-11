@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\LikeController;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -57,6 +58,7 @@ Route::delete('desactivar-cuenta/{id}' , [UserController::class, 'destroy'])->mi
 Route::get('dashboard/notas', [UserController::class, 'posts'])->middleware(['auth', 'verified'])->name('users.posts');
 Route::get('dashboard/borrador/{id}' , [UserController::class, 'trashed'])->middleware(['auth', 'verified'])->name('users.trashed');
 Route::get('dashboard/comentarios', [UserController::class, 'reviews'])->middleware(['auth', 'verified'])->name('users.reviews');
+Route::get('dashboard/likes', [UserController::class, 'likes'])->middleware(['auth', 'verified'])->name('users.likes');
 
 // rutas de las imagenes
 Route::post('image/store', [ImageController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store-image');
@@ -64,10 +66,7 @@ Route::get('image/{filename}/show', [ImageController::class, 'show'])->name('use
 Route::put('image/{filename}/update', [ImageController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update-image');
 Route::delete('image/{filename}/destroy', [ImageController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.destroy-image');
 
-Route::get('dashboard/likes', function() {
-    return view('users.likes', ['title' => 'Mis likes']);
-})->middleware(['auth', 'verified'])->name('users.likes');
-
+// Rutas de las notas
 Route::get('notas/{user?}', [PostController::class, 'index'])->name('posts.index');
 Route::get('notas/crear', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('posts.create');
 Route::post('notas/crear', [PostController::class, 'store'])->middleware(['auth', 'verified'])->name('posts.store');
@@ -77,7 +76,13 @@ Route::patch('notas/editar/{post}', [PostController::class, 'update'])->middlewa
 Route::delete('notas/borrar/{post}', [PostController::class, 'destroy'])->middleware(['auth', 'verified'])->name('posts.destroy');
 Route::patch('notas/restaurar/{post}', [PostController::class, 'restore'])->middleware(['auth', 'verified'])->name('posts.restore');
 
+// Rutas de los comentarios
 Route::post('comentarios/crear/{post}', [ReviewController::class, 'store'])->middleware(['auth', 'verified'])->name('reviews.store');
 Route::get('comentarios/editar/{post}/{review}', [ReviewController::class, 'edit'])->middleware(['auth', 'verified'])->name('reviews.edit');
 Route::patch('comentarios/editar/{review}', [ReviewController::class, 'update'])->middleware(['auth', 'verified'])->name('reviews.update');
 Route::delete('comentarios/borrar/{review}', [ReviewController::class, 'destroy'])->middleware(['auth', 'verified'])->name('reviews.destroy');
+
+
+// Rutas de los likes
+Route::post('likes/crear/{post}', [LikeController::class, 'store'])->middleware(['auth', 'verified'])->name('likes.store');
+Route::delete('likes/borrar/{post}/{user}', [LikeController::class, 'destroy'])->middleware(['auth', 'verified'])->name('likes.destroy');
