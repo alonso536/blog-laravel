@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
@@ -24,7 +26,9 @@ use App\Http\Controllers\Auth\PasswordController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/', 'home')->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/busqueda', [HomeController::class, 'store'])->name('home.search');
 
 // rutas del registro de usuarios
 Route::get('registro', [RegisterController::class, 'index'])->middleware('guest')->name('register');

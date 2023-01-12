@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public function posts() {
-        return $this->hasMany(Post::class)->orderBy('updated_at', 'desc');
+        return $this->hasMany(Post::class)->whereNull('deleted_at')->orderBy('updated_at', 'desc');
     }
 
     public function reviews() {
@@ -64,6 +64,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function likes() {
-        return $this->hasMany(Like::class)->orderBy('updated_at', 'desc');;
+        return $this->hasMany(Like::class)->orderBy('updated_at', 'desc');
     }
 }

@@ -16,6 +16,9 @@
                 </thead>
                 <tbody>
                     @foreach(Auth::user()->reviews as $review)
+                    @if(is_null($review->post))
+                        @continue
+                    @endif
                     <tr>
                         <td><a href="{{route('posts.show', $review->post->id)}}" class="link">{{$review->post->id}}</a></td>
                         <td>{{(strlen($review->content) > 20) ? substr($review->content, 0, 15).'...' : $review->content}}</td>

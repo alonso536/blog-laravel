@@ -86,6 +86,12 @@ class UserController extends Controller
     public function destroy(Request $request, $id) {
         $user = User::find($id);
 
+        $posts = $user->posts;
+
+        foreach($posts as $post) {
+            $post->delete();
+        }
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
@@ -105,7 +111,7 @@ class UserController extends Controller
     }
 
     public function likes() {
-        $likes = Like::orderBy('created_at', 'desc')->where('user_id', Auth::id())->paginate(3);
+        $likes = Like::orderBy('created_at', 'desc')->where('user_id', Auth::id())->paginate(6);
         return view('users.likes', ['title' => 'Notas que me gustan', 'likes' => $likes]);
     }
 

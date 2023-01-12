@@ -64,6 +64,9 @@
                         <p>Esta nota no tiene ningún comentario</p>
                         @else
                         @foreach($post->reviews as $review)
+                        @if(is_null($review->user))
+                        @continue
+                        @endif
                         <div class="border-bottom py-3 my-3">
                             <h5>
                                 <a href="{{route('users.profile', ['username' => $review->user->username, 'id' => $review->user->id])}}" class="link">{{'@'.$review->user->username}}</a>

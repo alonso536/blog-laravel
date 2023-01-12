@@ -4,6 +4,9 @@
         <article class="col-md-8 col-12 my-4">
             <h2 class="py-2">Notas que me gustan</h2>
             @foreach($likes as $like)
+            @if(is_null($like->post))
+                @continue
+            @endif
             <div class="border-bottom py-3 my-3">
                 <h4>{{$like->post->title}}</h4>
                 <h5>
